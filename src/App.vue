@@ -1,16 +1,7 @@
 <template>
   <div id="app">
-    <section class="section">
-  	      <h4>
-              Vue adoptation of Ettric's
-              <a href="//codepen.io/ettrics/pen/QbPEeg">Codepen</a>
-          </h4>
-    </section>
     <Kanban :stages="statuses" :blocks="blocks" @update-block="updateBlock">
         <div v-for="item in blocks" :slot="item.id" :key="item.id">
-            <div>
-                <strong>id:</strong> {{ item.id }}
-            </div>
             <div>
                 {{ item.title }}
             </div>
@@ -20,109 +11,107 @@
 </template>
 
 <script>
-import faker from 'faker';
-import { debounce } from 'lodash';
-import Kanban from './components/Kanban';
+import faker from 'faker'
+import { debounce } from 'lodash'
+import Kanban from './components/Kanban'
 
 export default {
   name: 'app',
   components: {
-    Kanban,
+    Kanban
   },
   data() {
     return {
-      statuses: ['on-hold', 'in-progress', 'needs-review', 'approved'],
-      blocks: [],
-    };
+      statuses: [
+        'Backlog',
+        'Stand by',
+        'Research',
+        'Production',
+        'To test',
+        'In progress'
+      ],
+      blocks: []
+    }
   },
   mounted() {
     for (let i = 0; i <= 10; i += 1) {
       this.blocks.push({
         id: i,
         status: this.statuses[Math.floor(Math.random() * 4)],
-        title: faker.company.bs(),
-      });
+        title: faker.company.bs()
+      })
     }
   },
 
   methods: {
-    updateBlock: debounce(function (id, status) {
-      this.blocks.find(b => b.id === Number(id)).status = status;
-    }, 500),
-  },
-};
+    updateBlock: debounce(function(id, status) {
+      this.blocks.find(b => b.id === Number(id)).status = status
+    }, 500)
+  }
+}
 </script>
 
 <style lang="scss">
-    @import './assets/kanban.scss';
+@import './assets/main.sass';
 
-    $on-hold: #FB7D44;
-    $in-progress: #2A92BF;
-    $needs-review: #F4CE46;
-    $approved: #00B961;
+$on-hold: #fb7d44;
+$in-progress: #2a92bf;
+$needs-review: #f4ce46;
+$approved: #00b961;
 
-    * {
-    	box-sizing: border-box;
+* {
+  box-sizing: border-box;
+}
+
+.drag-column {
+  &-on-hold {
+    .drag-column-header,
+    .is-moved,
+    .drag-options {
+      background: $on-hold;
     }
+  }
 
-    body {
-    	background: #33363D;
-    	color: white;
-    	font-family: 'Lato';
-    	font-weight: 300;
-    	line-height: 1.5;
-    	-webkit-font-smoothing: antialiased;
+  &-in-progress {
+    .drag-column-header,
+    .is-moved,
+    .drag-options {
+      background: $in-progress;
     }
+  }
 
-    .drag-column {
-        &-on-hold {
-            .drag-column-header,
-            .is-moved,
-            .drag-options {
-                background: $on-hold;
-            }
-        }
-
-        &-in-progress {
-            .drag-column-header,
-            .is-moved,
-            .drag-options {
-                background: $in-progress;
-            }
-        }
-
-        &-needs-review {
-            .drag-column-header,
-            .is-moved,
-            .drag-options{
-                background: $needs-review;
-            }
-        }
-
-        &-approved {
-            .drag-column-header,
-            .is-moved,
-            .drag-options {
-                background: $approved;
-            }
-        }
+  &-needs-review {
+    .drag-column-header,
+    .is-moved,
+    .drag-options {
+      background: $needs-review;
     }
+  }
 
-    .section {
-    	padding: 20px;
-    	text-align: center;
-
-    	a {
-    		color: white;
-    		text-decoration: none;
-    		font-weight: 300;
-    	}
-
-    	h4 {
-    		font-weight: 400;
-    		a {
-    			font-weight: 600;
-    		}
-    	}
+  &-approved {
+    .drag-column-header,
+    .is-moved,
+    .drag-options {
+      background: $approved;
     }
+  }
+}
+
+.section {
+  padding: 20px;
+  text-align: center;
+
+  a {
+    color: white;
+    text-decoration: none;
+    font-weight: 300;
+  }
+
+  h4 {
+    font-weight: 400;
+    a {
+      font-weight: 600;
+    }
+  }
+}
 </style>
