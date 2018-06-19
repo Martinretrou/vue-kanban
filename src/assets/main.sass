@@ -1,10 +1,31 @@
+// 1. Import the initial variables
+@import "~bulma/sass/utilities/initial-variables"
+
 @import "vars"
+@import "fonts"
 
 @import "./components/kanban"
+
+// Import the rest of Bulma
+@import "~bulma"
 
 
 // Global styling
 
 body
   background-color: $light-blue
-  
+
+.page
+  height: 100vh
+  width: 100vw
+  padding: 2em
+
+// Animations
+
+.fade-enter-active, .fade-leave-active,
+.fade-enter-active, .fade-leave-active
+  transition: opacity .5s
+
+
+.fade-enter, .fade-leave-to
+  opacity: 0

@@ -38,7 +38,8 @@ export default {
       this.blocks.push({
         id: i,
         status: this.statuses[Math.floor(Math.random() * 4)],
-        title: faker.company.bs()
+        title: faker.company.bs(),
+        hovered: false
       })
     }
   },
